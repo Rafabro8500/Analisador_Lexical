@@ -36,16 +36,16 @@ public class LexicalAnaliser {
         }
     }
 
-    private void tokenize() {
+    private void tokenize() { //most digusting algorithm I've ever made. I'm truly sorry.
         for (String word : input) {
             StringBuilder token = new StringBuilder();
             for (int i = 0; i < word.length(); i++) {
                 Character c = word.charAt(i);
-                if (tokensTable.containsKey(c.toString())) {
+                if (tokensTable.containsKey(c.toString())) { //check for operator or parenthesis type
                     tokens.add(Character.toString(c));
                     tokenTypes.add(tokensTable.get(c.toString()));
                     token = new StringBuilder();
-                } else if (c == ':') {
+                } else if (c == ':') { //check for assignment
                     if (i + 1 <= word.length()) {
                         if (word.charAt(i + 1) == '=') {
                             tokens.add(":=");
@@ -54,7 +54,7 @@ public class LexicalAnaliser {
                             token = new StringBuilder();
                         }
                     }
-                } else if (c == '.') {
+                } else if (c == '.') { //check for decimal number
                     c=word.charAt(i);
                     token.append(c);
                     while (i + 1 < word.length() && Character.isDigit(word.charAt(i+1))) {
@@ -64,7 +64,7 @@ public class LexicalAnaliser {
                     tokens.add(token.toString());
                     tokenTypes.add("number");
                     token = new StringBuilder();
-                } else if (Character.isDigit(c)) {
+                } else if (Character.isDigit(c)) { //check for number
                     while (i<word.length() && Character.isDigit(c)){
                         c = word.charAt(i++);
                         token.append(c);
@@ -83,14 +83,16 @@ public class LexicalAnaliser {
                         tokenTypes.add("number");
                         token = new StringBuilder();
                     }
-                } else if (Character.isLetter(c)) {
+                } else if (Character.isLetter(c)) { //check for id or keyword
                     token.append(c);
-                    while (i + 1 < word.length() && (Character.isLetter(c) || Character.isDigit(c))) {
+                    while (i + 1 < word.length() && (Character.isLetter(word.charAt(i+1)) || Character.isDigit(word.charAt(i+1)))) {
                         c = word.charAt(++i);
                         token.append(c);
                     }
                     tokens.add(token.toString());
-                    tokenTypes.add("id");
+                    if(tokensTable.containsKey(token.toString()))
+                        tokenTypes.add("keyword");
+                    else tokenTypes.add("id");
                     token = new StringBuilder();
                 }
             }
