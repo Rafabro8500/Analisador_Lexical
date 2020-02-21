@@ -30,9 +30,9 @@ public class LexicalAnaliser {
     }
 
 
-    public void printFormatTokens(){
-        for (int i = 0; i<tokens.size(); i++) {
-            System.out.println("<"+tokenTypes.get(i)+", "+tokens.get(i)+">");
+    public void printFormatTokens() {
+        for (int i = 0; i < tokens.size(); i++) {
+            System.out.println("<" + tokenTypes.get(i) + "," + "\"" + tokens.get(i) + "\"" + ">");
         }
     }
 
@@ -55,9 +55,9 @@ public class LexicalAnaliser {
                         }
                     }
                 } else if (c == '.') { //check for decimal number
-                    c=word.charAt(i);
+                    c = word.charAt(i);
                     token.append(c);
-                    while (i + 1 < word.length() && Character.isDigit(word.charAt(i+1))) {
+                    while (i + 1 < word.length() && Character.isDigit(word.charAt(i + 1))) {
                         c = word.charAt(++i);
                         token.append(c);
                     }
@@ -66,14 +66,14 @@ public class LexicalAnaliser {
                     token = new StringBuilder();
                 } else if (Character.isDigit(c)) { //check for number
                     token.append(c);
-                    while (i + 1<word.length() && Character.isDigit(word.charAt(i+1))){
+                    while (i + 1 < word.length() && Character.isDigit(word.charAt(i + 1))) {
                         c = word.charAt(++i);
                         token.append(c);
                     }
-                    if (i+1 < word.length() && word.charAt(i+1) == '.') {
+                    if (i + 1 < word.length() && word.charAt(i + 1) == '.') {
                         c = word.charAt(++i);
                         token.append(c);
-                        while (i + 1<word.length() && Character.isDigit(word.charAt(i+1))) {
+                        while (i + 1 < word.length() && Character.isDigit(word.charAt(i + 1))) {
                             c = word.charAt(++i);
                             token.append(c);
                         }
@@ -87,12 +87,12 @@ public class LexicalAnaliser {
                     }
                 } else if (Character.isLetter(c)) { //check for id or keyword
                     token.append(c);
-                    while (i + 1 < word.length() && (Character.isLetter(word.charAt(i+1)) || Character.isDigit(word.charAt(i+1)))) {
+                    while (i + 1 < word.length() && (Character.isLetter(word.charAt(i + 1)) || Character.isDigit(word.charAt(i + 1)))) {
                         c = word.charAt(++i);
                         token.append(c);
                     }
                     tokens.add(token.toString());
-                    if(tokensTable.containsKey(token.toString()))
+                    if (tokensTable.containsKey(token.toString()))
                         tokenTypes.add("keyword");
                     else tokenTypes.add("id");
                     token = new StringBuilder();
