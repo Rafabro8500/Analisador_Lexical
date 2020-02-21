@@ -10,6 +10,6 @@ public class Main {
             input.add(sc.next());
         }
         LexicalAnaliser please = new LexicalAnaliser(input);
-        please.printTokens();
+        please.printFormatTokens();
     }
 }
