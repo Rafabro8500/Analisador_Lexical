@@ -65,14 +65,16 @@ public class LexicalAnaliser {
                     tokenTypes.add("number");
                     token = new StringBuilder();
                 } else if (Character.isDigit(c)) { //check for number
-                    while (i<word.length() && Character.isDigit(c)){
-                        c = word.charAt(i++);
+                    token.append(c);
+                    while (i + 1<word.length() && Character.isDigit(word.charAt(i+1))){
+                        c = word.charAt(++i);
                         token.append(c);
                     }
-                    if (c == '.') {
-                        c = word.charAt(i);
-                        while (i<word.length() && Character.isDigit(c)) {
-                            c = word.charAt(i++);
+                    if (i+1 < word.length() && word.charAt(i+1) == '.') {
+                        c = word.charAt(++i);
+                        token.append(c);
+                        while (i + 1<word.length() && Character.isDigit(word.charAt(i+1))) {
+                            c = word.charAt(++i);
                             token.append(c);
                         }
                         tokens.add(token.toString());
